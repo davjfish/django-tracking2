@@ -113,4 +113,13 @@
     {% else %}
         <p>No pageview stats available</p>
     {% endif %}
+
+<ul>
+    {% for visit in page_visits %}
+    <li>
+        <a href="{{visit.url|safe}}">{{visit.url|safe}}</a> visited by {{visit.visitor.user}} on {{visit.view_time}}
+    </li>
+    {%endfor %}
+
+</ul>
 {% endif %}
