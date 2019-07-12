@@ -56,6 +56,11 @@ def dashboard(request):
         pageview_stats = Pageview.objects.stats(start_time, end_time)
     else:
         pageview_stats = None
+    
+    # get the last 100 page visits
+    page_visits = Pageview.objects.all().order_by("-view_time")
+    if len(page_visits) > 101:
+        page_visits = page_visits[:100]
 
     context = {
         'form': form,
@@ -64,5 +69,6 @@ def dashboard(request):
         'user_stats': user_stats,
         'visitor_stats': visitor_stats,
         'pageview_stats': pageview_stats,
+        'page_visits': page_visits,
     }
     return render(request, 'tracking/dashboard.html', context)
